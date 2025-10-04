@@ -38,11 +38,12 @@ end
 
 function create_cnn_model(N)
     model = Chain(
+        x -> reshape(x, N, N, 1, 1),
         Conv((3, 3), 1 => 8, pad=1, tanh),
         Conv((3, 3), 8 => 16, pad=1, tanh),
         Conv((3, 3), 16 => 8, pad=1, tanh),
         Conv((3, 3), 8 => 1, pad=1),
-        x -> dropdims(x, dims=3)
+        x -> reshape(x, N, N)
     )
     return model
 end
