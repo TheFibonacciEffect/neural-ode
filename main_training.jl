@@ -1,0 +1,48 @@
+include("training_framework.jl")
+include("models.jl")
+
+rng = Xoshiro(0)
+N = 3
+datasize = 30
+tspan = (0.0f0, 1.5f0)
+num_runs = 5
+
+println("Generating training data...")
+train_data, train_u0, tsteps = generate_multiple_runs(N, datasize, tspan, num_runs, rng)
+
+println("Generating test data...")
+test_u0 = collect(rand(rng, Float32, N, N))
+test_data = generate_heat_equation_data(test_u0, tspan, tsteps, N)
+
+println("\n=== Training Simple Neural ODE ===")
+model1 = create_simple_neural_ode(N)
+params1, state1 = train_model(model1, train_u0, train_data, tspan, tsteps, rng; 
+                               maxiters=50, learning_rate=0.05)
+rmse1, pred1 = evaluate_model(model1, params1, state1, test_u0, test_data, tspan, tsteps)
+println("Simple Neural ODE Test RMSE: ", rmse1)
+save_model(model1, params1, state1, "model_simple_node.jls")
+println("Model saved to model_simple_node.jls")
+
+println("\n=== Training Encoder-NODE-Decoder ===")
+model2 = create_encoder_node_decoder(N)
+params2, state2 = train_model(model2, train_u0, train_data, tspan, tsteps, rng; 
+                               maxiters=50, learning_rate=0.05)
+rmse2, pred2 = evaluate_model(model2, params2, state2, test_u0, test_data, tspan, tsteps)
+println("Encoder-NODE-Decoder Test RMSE: ", rmse2)
+save_model(model2, params2, state2, "model_encoder_decoder.jls")
+println("Model saved to model_encoder_decoder.jls")
+
+println("\n=== Training CNN Model ===")
+model3 = create_cnn_model(N)
+params3, state3 = train_model(model3, train_u0, train_data, tspan, tsteps, rng; 
+                               maxiters=50, learning_rate=0.05)
+rmse3, pred3 = evaluate_model(model3, params3, state3, test_u0, test_data, tspan, tsteps)
+println("CNN Model Test RMSE: ", rmse3)
+save_model(model3, params3, state3, "model_cnn.jls")
+println("Model saved to model_cnn.jls")
+
+println("\n=== Summary ===")
+println("Simple Neural ODE RMSE: ", rmse1)
+println("Encoder-NODE-Decoder RMSE: ", rmse2)
+println("CNN Model RMSE: ", rmse3)
+println("\nAll models trained and saved successfully!")
