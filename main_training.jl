@@ -32,17 +32,8 @@ println("Encoder-NODE-Decoder Test RMSE: ", rmse2)
 save_model(model2, params2, state2, "model_encoder_decoder.jls")
 println("Model saved to model_encoder_decoder.jls")
 
-println("\n=== Training CNN Model ===")
-model3 = create_cnn_model(N)
-params3, state3 = train_model(model3, train_u0, train_data, tspan, tsteps, rng; 
-                               maxiters=50, learning_rate=0.05)
-rmse3, pred3 = evaluate_model(model3, params3, state3, test_u0, test_data, tspan, tsteps)
-println("CNN Model Test RMSE: ", rmse3)
-save_model(model3, params3, state3, "model_cnn.jls")
-println("Model saved to model_cnn.jls")
-
 println("\n=== Summary ===")
 println("Simple Neural ODE RMSE: ", rmse1)
 println("Encoder-NODE-Decoder RMSE: ", rmse2)
-println("CNN Model RMSE: ", rmse3)
+
 println("\nAll models trained and saved successfully!")

@@ -10,8 +10,8 @@ tsteps = range(tspan[1], tspan[2]; length = datasize)
 test_u0 = collect(rand(rng, Float32, N, N))
 test_data = generate_heat_equation_data(test_u0, tspan, tsteps, N)
 
-model_files = ["model_simple_node.jls", "model_encoder_decoder.jls", "model_cnn.jls"]
-model_names = ["Simple Neural ODE", "Encoder-NODE-Decoder", "CNN Model"]
+model_files = ["model_simple_node.jls", "model_encoder_decoder.jls", ]
+model_names = ["Simple Neural ODE", "Encoder-NODE-Decoder"]
 
 predictions = []
 for (file, name) in zip(model_files, model_names)

@@ -23,7 +23,7 @@ test_data = generate_heat_equation_data(test_u0, tspan, tsteps, N)
 
 println("=== Testing Saved Models ===\n")
 
-model_files = ["model_simple_node.jls", "model_encoder_decoder.jls", "model_cnn.jls"]
+model_files = ["model_simple_node.jls", "model_encoder_decoder.jls", ]
 model_names = ["Simple Neural ODE", "Encoder-NODE-Decoder", "CNN Model"]
 
 predictions = []
