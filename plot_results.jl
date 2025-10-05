@@ -27,7 +27,7 @@ for (file, name) in zip(model_files, model_names)
 end
 
 px, py = 2, 2
-p = plot(layout=(2,2), size=(800, 800))
+p = plot(layout=(2,1), size=(800, 800))
 
 plot!(p[1], tsteps, test_data[px, py, :], label="Ground Truth", 
       linewidth=2, title="Element ($px, $py) Over Time")
