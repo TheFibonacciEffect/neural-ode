@@ -37,12 +37,13 @@ for (i, (pred, name)) in enumerate(zip(predictions, model_names))
     end
 end
 
+rmse = zeros(length(model_names))
 for (i, (pred, name)) in enumerate(zip(predictions, model_names))
     if pred !== nothing
-        rmse = calculate_rmse(pred, test_data)
-        bar!(p[i+1], [rmse], label=name, title="$name\nRMSE: $(round(rmse, digits=6))")
+        rmse[i] = calculate_rmse(pred, test_data)
     end
 end
+bar!(p[2], model_names, rmse)
 
 savefig("model_comparison.png")
 println("Plot saved to model_comparison.png")
