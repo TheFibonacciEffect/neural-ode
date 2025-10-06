@@ -72,9 +72,9 @@ function train_model(model, u0_list, data_list, tspan, tsteps, rng; maxiters=100
     function loss_function(params)
         total_loss = 0.0
         for (u0, data) in zip(u0_list, data_list)
-            pred = predict_model(params, u0)
-            total_loss += sum(abs2, data .- pred)
-        end
+    pred = predict_model(params, u0)
+    total_loss += sum(abs2, data .- pred)
+end
         return total_loss / length(u0_list)
     end
     
