@@ -20,7 +20,7 @@ params1, state1 = train_model(model1, train_u0, train_data, tspan, tsteps, rng;
                                maxiters=50, learning_rate=0.05)
 rmse1, pred1 = evaluate_model(model1, params1, state1, test_u0, test_data, tspan, tsteps)
 println("Simple Neural ODE Test RMSE: ", rmse1)
-save_model(model1, params1, state1, "model_simple_node.jls")
+save_model(model1, params1, state1, "models/model_simple_node.jls")
 println("Model saved to model_simple_node.jls")
 
 println("\n=== Training Encoder-NODE-Decoder ===")
@@ -29,7 +29,7 @@ params2, state2 = train_model(model2, train_u0, train_data, tspan, tsteps, rng;
                                maxiters=50, learning_rate=0.05)
 rmse2, pred2 = evaluate_model(model2, params2, state2, test_u0, test_data, tspan, tsteps)
 println("Encoder-NODE-Decoder Test RMSE: ", rmse2)
-save_model(model2, params2, state2, "model_encoder_decoder.jls")
+save_model(model2, params2, state2, "models/model_encoder_decoder.jls")
 println("Model saved to model_encoder_decoder.jls")
 
 println("\n=== Summary ===")

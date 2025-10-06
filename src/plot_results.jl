@@ -56,7 +56,7 @@ for (i, (pred, name)) in enumerate(zip(predictions, model_names))
     end
 end
 
-savefig("heatmaps.png")
+savefig("plots/heatmaps.png")
 println("Heatmap saved to heatmaps.png")
 
 p3 = plot(layout=(1,1), size=(800, 600))
@@ -68,7 +68,7 @@ for (pred, name) in zip(predictions, model_names)
     end
 end
 
-savefig("scatter_comparison.png")
+savefig("plots/scatter_comparison.png")
 println("Scatter plot saved to scatter_comparison.png")
 
 println("\nAll plots generated successfully!")

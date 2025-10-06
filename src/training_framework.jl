@@ -2,6 +2,9 @@ using ComponentArrays, Lux, DiffEqFlux, OrdinaryDiffEq, Optimization, Optimizati
       OptimizationOptimisers, Random, Plots, Statistics
 using Serialization
 
+# Initialize a fixed random number generator
+const RNG = Random.MersenneTwister(1234)
+
 function generate_heat_equation_data(u0, tspan, tsteps, N)
     function trueODEfunc(du, u, p, t)
         Nx, Ny = size(u)
@@ -75,8 +78,12 @@ function train_model(model, u0_list, data_list, tspan, tsteps, rng; maxiters=100
         return total_loss / length(u0_list)
     end
     
+    iter_count = 0
     function callback(state, l)
-        println("Loss: ", l)
+        iter_count += 1
+        if iter_count % div(maxiters, 10) == 0 || iter_count == maxiters
+            println("Iteration: ", iter_count, " | Loss: ", l)
+        end
         return false
     end
     
@@ -89,7 +96,7 @@ function train_model(model, u0_list, data_list, tspan, tsteps, rng; maxiters=100
     
     optprob2 = remake(optprob; u0 = result.u)
     result2 = Optimization.solve(optprob2, Optim.BFGS(; initial_stepnorm = 0.01); 
-                                 callback, allow_f_increases = false)
+                                 callback, allow_f_increases = false, maxiters = 10)
     
     return result2.u, st
 end
